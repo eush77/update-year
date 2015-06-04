@@ -20,15 +20,6 @@ module.exports = function updateYear(str) {
   var res = arr.slice();
   var ele = arr.slice(-1)[0];
 
-  if (arr.length === 1 && +arr[0] === +year) {
-    return str;
-  }
-
-  if (len === 1 && +ele === +year - 1) {
-    return [arr[0], year].join('-');
-  }
-
-
   if (ele.indexOf('-') !== -1) {
     var years = ele.split('-');
     var last = years.slice(-1);
@@ -37,7 +28,14 @@ module.exports = function updateYear(str) {
     } else if (+last === +year - 1) {
       ele = [years[0], year].join('-');
       res.splice(-1, 1, ele);
+    } else {
+      res.push(year);
     }
+  } else if (+ele === +year - 1) {
+    ele = [ele, year].join('-');
+    res.splice(-1, 1, ele);
+  } else {
+    res.push(year);
   }
 
   var updated = unique(res).join(', ');
